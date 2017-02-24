@@ -76,7 +76,7 @@ def q_rules():
     resp=conn.text
     par=xml.dom.minidom.parseString(resp)
     result=par.toprettyxml()
-    if conn.status_code == 201:
+    if conn.status_code == 200:
         print result
     else:
        print "the error code return is "+str(conn.status_code)
