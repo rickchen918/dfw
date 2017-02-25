@@ -13,8 +13,8 @@ If you want to create 250 rules, you can use command which is like
 
 python dfw.py gen -vsmip 192.168.0.96 -vsmuser admin -vsmpass password -mul 1 -base 250
 
--vsmip : nsx manager ip address 
--vsmuser: nsx manager user name 
+-vsmip : nsx manager ip address \n
+-vsmuser: nsx manager user name \n
 -vsmpass: nsx manager password 
 -mul : 1st dimension 
 -base : 2 dimension 
