@@ -29,9 +29,9 @@ dfw_conf="/api/4.0/firewall/globalroot-0/config"
 def c_body(b,c):
     template=''
     template+="<section name = 'lab_rules'>"
-    i=1
-    j=1
-    while i <= b:
+    i=0
+    while i < b:
+	j=0
 	while j < c:
 	    template+="""<rule disabled='false' logged='true'>
 <name>test_%s</name>
@@ -53,6 +53,7 @@ def c_body(b,c):
 </rule>""" %(i,i,j,i,j)  
             j=j+1
         i=i+1
+        print i
     template+="\n</section>"
     return template
 
@@ -96,6 +97,7 @@ def reset_rules():
 if var['gen']==True:
     mul_b=int(var['<multiple>'])
     base_c=int(var['<count>'])
+    print mul_b
     body=c_body(mul_b,base_c)
     create_section()
 elif var['qry']==True:
