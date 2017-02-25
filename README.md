@@ -18,7 +18,9 @@ python dfw.py gen -vsmip 192.168.0.96 -vsmuser admin -vsmpass password -mul 1 -b
 -vsmuser: nsx manager user name 
 
 -vsmpass: nsx manager password 
+
 -mul : 1st dimension 
+
 -base : 2 dimension 
 
 according the example of above cli,
