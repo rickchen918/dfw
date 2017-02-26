@@ -3,10 +3,11 @@
 '''Usage:
     dfw.py gen -vsmip <nsxmgr_ip> -vsmuser <nsx_username> -vsmpass <nsx_password> -mul <multiple> -base <count>
     dfw.py qry -vsmip <nsxmgr_ip> -vsmuser <nsx_username> -vsmpass <nsx_password>
+    dfw.py qry-deny -vsmip <nsxmgr_ip> -vsmuser <nsx_username> -vsmpass <nsx_password>
     dfw.py reset -vsmip <nsxmgr_ip> -vsmuser <nsx_username> -vsmpass <nsx_password>
 '''
 
-import sys
+import sys,re
 sys.path.insert(0,'./env/lib/python2.7/site-packages')
 
 from docopt import docopt
@@ -78,10 +79,27 @@ def q_rules():
     par=xml.dom.minidom.parseString(resp)
     result=par.toprettyxml()
     if conn.status_code == 200:
-        print result
+#       print result
+	print resp
     else:
        print "the error code return is "+str(conn.status_code)
        print "the error message is "+resp
+
+def q_deny_rules():
+    url="https://"+nsxmgr+dfw_conf
+    conn=requests.get(url,verify=False,auth=(nsx_username,nsx_password))
+    print conn.status_code
+    resp=conn.text.split("</rule>")
+    for line in resp:
+        regex1=re.findall("<rule id.*?<action>reject<\/action>.*<\/packetType>",line)
+        regex2=re.findall("<rule id.*?<action>deny<\/action>.*<\/packetType>",line)
+        if regex1 != []:
+            print regex1
+            print "\n"
+        elif regex2 !=[]:
+            print regex2
+            print "\n"
+
 
 def reset_rules():
     url="https://"+nsxmgr+dfw_conf
@@ -102,6 +120,8 @@ if var['gen']==True:
     create_section()
 elif var['qry']==True:
     q_rules()
+elif var['qry-deny']==True:
+    q_deny_rules()
 elif var['reset']==True:
     reset_rules()
 else:
